@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: ${JDBC_DATABASE_URL}
+    username: ${JDBC_DATABASE_USERNAME}
+    password: ${JDBC_DATABASE_PASSWORD}
+
+  jpa:
+    database: POSTGRESQL
+    database_platform: org.hibernate.dialect.PostgreSQLDialect
+    generateDdl: true
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+          connection:
+            characterEnconding: UTF-8
+            charSet: UTF-8
+
+  profiles:
+    active: production
+
+logging:
+  level:
+    org.springframework: INFO
+
+server:
+  port: ${PORT:5000}
