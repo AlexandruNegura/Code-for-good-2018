@@ -17,9 +17,10 @@ public class NotificationIntentService extends IntentService {
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         //TODO - modify EmptyActivity to SitActivity when created
-        Intent newIntent = new Intent(NotificationIntentService.this, EmptyActivity.class);
+        Intent newIntent = new Intent(NotificationIntentService.this, SitActivity.class);
         newIntent.putExtra("test", "test");
         newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        //TODO - change request code to UNIQUE ID
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, newIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         //TODO - modify notification based on current sit - TO GET EXTRA
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "ceva")
@@ -28,11 +29,13 @@ public class NotificationIntentService extends IntentService {
                 .setContentText("context")
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)
+                .setGroup(NotificationUtils.GROUP_KEY_NOTIFICATION)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
 
         // notificationId is a unique int for each notification that you must define
+        //TODO - change id to UNIQUE ID
         notificationManager.notify(1234, mBuilder.build());
     }
 }
