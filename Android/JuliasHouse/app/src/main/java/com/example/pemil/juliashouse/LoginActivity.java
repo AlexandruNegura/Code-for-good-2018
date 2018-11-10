@@ -1,8 +1,13 @@
 package com.example.pemil.juliashouse;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.content.SharedPreferences;
+import android.view.View;
+import android.widget.EditText;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -10,6 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,6 +25,14 @@ public class LoginActivity extends AppCompatActivity {
     //Declare a private RequestQueue variable
     private RequestQueue requestQueue;
     private static LoginActivity mInstance;
+
+    private Context context = this;
+    private SharedPreferences sharedPref = context.getSharedPreferences(
+            getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+    private SharedPreferences.Editor editor = sharedPref.edit();
+    private EditText usernameEditText;
+    private EditText passwordEditText;
+
 
     public static synchronized LoginActivity getInstance() {
         return mInstance;
@@ -53,20 +67,42 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Boolean logged = false;
+        String savedUser;
+        String davedPassword;
+
+        usernameEditText = findViewById(R.id.username);
+        passwordEditText = findViewById(R.id.input_user_password);
+
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.login);
         mInstance = this;
 
-        POST("alex", "alex");
+        // Check if UserResponse is Already Logged In
+        savedUser = sharedPref.getString("username", "");
+        davedPassword = sharedPref.getString("password", "");
+
+        logged = (savedUser != "") && (davedPassword != "");
+
+        if (logged) {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+        }
 
 
     }
 
-    public void POST(final String user, final String passwd) {
+
+    public void login(View viewd) {
 
         RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
         String requestUrl = "https://code-for-good.herokuapp.com/api/user/login";
         JSONObject postparams = new JSONObject();
+
+        final String user = usernameEditText.getText().toString();
+        final String passwd = passwordEditText.getText().toString();
         try {
             postparams.put("username", user);
             postparams.put("password", passwd);
@@ -77,7 +113,16 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Object response) {
 
-                            Log.i("DANA",response.toString());
+                            // caching the authentification details
+                            Log.i("Auth successful",response.toString());
+                            editor.putString("username", user);
+                            editor.putString("password", passwd);
+                            editor.commit();
+
+                            // change intent
+
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
 
                         }
 
