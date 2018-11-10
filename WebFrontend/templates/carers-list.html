@@ -85,7 +85,7 @@
                                 <td class="text-truncate"><a href="/carer/{{ item.id }}/modify"> <i class="icon-document-text"></i> </a></td>
                                 <td class="text-truncate"> {{ item.username }} </td>
                                 <td class="text-truncate"> {{ item.name }} </td>
-                                <td class="text-truncate"> {% for sit in item.sitsId %} <a href="/sit/{{ sit }}/modify">Sit ID: {{ sit }}</a><br> {% endfor %} </td>
+                                <td class="text-truncate"> {% for sit in item.sitsId %} <a href="/sit">Sit ID: {{ sit }}</a><br> {% endfor %} </td>
                                 <td class="text-truncate">  {% if item.gotHomeSafe == False %} <span class="tag tag-default tag-danger">YES</span>
                                                             {% else %} <span class="tag tag-default tag-success">no</span>
                                                             {% endif %}</td>
