@@ -15,6 +15,10 @@ def sit_add():
 def carer_add():
     return render_template('carer-form.html')
 
+@app.route('/404')
+def error404():
+    return render_template('error-404.html')
+
 
 if __name__ == '__main__':
     app.run()
