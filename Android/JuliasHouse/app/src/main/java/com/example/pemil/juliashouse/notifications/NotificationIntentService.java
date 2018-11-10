@@ -2,35 +2,55 @@ package com.example.pemil.juliashouse.notifications;
 
 import android.app.IntentService;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.util.Log;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.pemil.juliashouse.R;
 import com.example.pemil.juliashouse.SitActivity;
 
-import org.json.JSONObject;
+import java.util.HashMap;
+import java.util.Map;
 
 public class NotificationIntentService extends IntentService {
+    private SharedPreferences sharedPref;
+    private boolean isNotHome = false;
+    private RequestQueue requestQueue;
+
     public NotificationIntentService() {
         super("NotificationIntentService");
     }
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-//        Boolean isHomeSafeValid = intent.getBooleanExtra(NotificationUtils.HOME_SAFE, false);
-//        if (isHomeSafeValid != null) {
-//            Boolean getValueFromDB = checkIfHomeSafe()
-//        }
+        int sitId = intent.getIntExtra(NotificationUtils.ID, -1);
+        sharedPref = getApplicationContext().getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        int id = sharedPref.getInt("id", -1);
 
-        createNotification(intent);
+        Boolean isHomeSafeValid = intent.getBooleanExtra(NotificationUtils.HOME_SAFE, false);
+        if (isHomeSafeValid != null && !isHomeSafeValid) {
+            checkIfHomeSafe(sitId, id, intent);
+            if (isNotHome) {
+                createNotification(sitId, intent);
+            }
+        } else {
+            createNotification(sitId, intent);
+        }
     }
 
-    private void createNotification(Intent intent) {
-        int id = intent.getIntExtra(NotificationUtils.ID, -1);
+    private void createNotification(int id, Intent intent) {
+
         //DONE - modify EmptyActivity to SitActivity when created
         Intent newIntent = new Intent(NotificationIntentService.this, SitActivity.class);
         newIntent.putExtra(NotificationUtils.ID, id / 3);
@@ -54,10 +74,38 @@ public class NotificationIntentService extends IntentService {
         notificationManager.notify(id, mBuilder.build());
     }
 
-    private boolean checkIfHomeSafe(long id) {
-        RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
-        String requestUrl = "https://code-for-good.herokuapp.com/api/user/login";
-        JSONObject postparams = new JSONObject();
-        return false;
+    private void checkIfHomeSafe(long idSit, long idUser, Intent intent) {
+        String requestUrl = "https://code-for-good.herokuapp.com/api/notification/alert-not-home/" + idUser + "/" + idSit;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                requestUrl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("SCUCCCEES", response.toString());
+                        isNotHome = Boolean.valueOf(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //Failure Callback
+                        Log.i("ErrorRRRRR", error.toString());
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<>();
+                params.put("Content-Type", "application/json");
+                return params;
+            }
+        };
+        // Adding the request to the queue along with a unique string tag
+        getRequestQueue().add(stringRequest);
+    }
+
+    public RequestQueue getRequestQueue() {
+        if (requestQueue == null)
+            requestQueue = Volley.newRequestQueue(getApplicationContext());
+        return requestQueue;
     }
 }

@@ -17,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.pemil.juliashouse.Models.Sit;
+import com.example.pemil.juliashouse.notifications.NotificationUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -24,7 +25,10 @@ import org.json.JSONArray;
 
 import java.lang.reflect.Type;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,10 +43,10 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
 
 
-
     public static synchronized MainActivity getInstance() {
         return mInstance;
     }
+
     /*
     Create a getRequestQueue() method to return the instance of
     RequestQueue.This kind of implementation ensures that
@@ -54,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         return requestQueue;
     }
+
     /*
     public method to add the Request to the the single
     instance of RequestQueue created above.Setting a tag to every
@@ -64,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         request.setTag(tag);
         getRequestQueue().add(request);
     }
+
     /*
     Cancel all the requests matching with the given tag
     */
@@ -81,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         mInstance = this;
         Intent intent = getIntent();
         id = intent.getIntExtra("id", -1);
-        Log.i("ID",id + " ");
+        Log.i("ID", id + " ");
         context = this;
         getSits();
         recyclerView = findViewById(R.id.recycler_View);
@@ -115,16 +121,18 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         Log.i("Sits", response.toString());
-                        Type founderListType = new TypeToken<ArrayList<Sit>>(){}.getType();
+                        Type founderListType = new TypeToken<ArrayList<Sit>>() {
+                        }.getType();
 
                         sit = gson.fromJson(response.toString(), founderListType);
                         Log.i("Sits2", sit.toString());
-                        MainAdapter adapter = new MainAdapter(context, getSit());
+                        MainAdapter adapter = new MainAdapter(getApplicationContext(), getSit());
                         recyclerView.setAdapter(adapter);
                         recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-
-
+                        NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext(), sit);
+                        notificationUtils.createNotificationChannel();
+                        notificationUtils.createNotificationGroup();
                     }
                 },
                 new Response.ErrorListener() {
@@ -142,13 +150,10 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         // Adding the request to the queue along with a unique string tag
-        MainActivity.getInstance().addToRequestQueue(jsonObjReq, "getRequest");
+        this.addToRequestQueue(jsonObjReq, "getRequest");
 
-        //TODO trebuie lista de Sit, nu null
-        NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext(), null);
-        notificationUtils.createNotificationChannel();
-        notificationUtils.createNotificationGroup();
     }
+
     public void openSit(View view) {
         Intent intent = new Intent(this, SitActivity.class);
         startActivity(intent);
