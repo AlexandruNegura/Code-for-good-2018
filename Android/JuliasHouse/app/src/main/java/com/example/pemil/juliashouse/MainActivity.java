@@ -1,4 +1,4 @@
-package com.example.juliashouse;
+package com.example.pemil.juliashouse;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

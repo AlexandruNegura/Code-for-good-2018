@@ -1,4 +1,4 @@
-package com.example.juliashouse;
+package com.example.pemil.juliashouse;
 
 import org.junit.Test;
 
