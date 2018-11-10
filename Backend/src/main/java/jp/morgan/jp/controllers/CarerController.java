@@ -81,7 +81,7 @@ public class CarerController {
     }
 
     @GetMapping("/get-all-not-home-safe")
-    public ResponseEntity<List<Carrer>> getCarrerNotHomeSafe() {
+    public ResponseEntity<List<CarrerOutDTO>> getCarrerNotHomeSafe() {
         List<Carrer> carrers = carrerService.getAll();
 
         List<Carrer> notHomeSafeCarrers = carrers.stream().filter(carrer -> carrer.getGotHomeSafe() != null && !carrer.getGotHomeSafe()).collect(Collectors.toCollection(
@@ -102,6 +102,6 @@ public class CarerController {
             }
         }
 
-        return new ResponseEntity<>(notHomeSafeCarrers, HttpStatus.OK);
+        return new ResponseEntity<>(carrerOutDTOS, HttpStatus.OK);
     }
 }
