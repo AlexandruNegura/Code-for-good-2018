@@ -1,4 +1,10 @@
 <resources>
+    <!--Login-->
+    <string name="image_description">a_beautiful_string</string>
+    <string name="user_id_hint">User ID</string>
+    <string name="user_passwd_hint">Password</string>
+    <string name="reset_passwd">Reset Password</string>
+    <string name="preference_file_key">com.example.pemil.juliashouse.PREFERENCE_FILE_KEY</string>
     <string name="app_name">Julia\'s House Alert Service</string>
     <string name="arrived_at_destination">Arrived at Destination</string>
     <string-array name="delay_values">
@@ -8,10 +14,5 @@
         <item>2 h</item>
         <item>Tomorrow</item>
     </string-array>
-    <!--Login-->
-    <string name="image_description">a_beautiful_string</string>
-    <string name="user_id_hint">User ID</string>
-    <string name="user_passwd_hint">Password</string>
-    <string name="reset_passwd">Reset Password</string>
-    <string name="preference_file_key">com.example.pemil.juliashouse.PREFERENCE_FILE_KEY</string>
+
 </resources>
