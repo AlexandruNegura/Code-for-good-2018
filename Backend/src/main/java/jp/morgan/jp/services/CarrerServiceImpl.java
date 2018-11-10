@@ -51,4 +51,9 @@ public class CarrerServiceImpl implements CarrerService {
     public Carrer findById(Long id) {
         return carrerRepo.getOne(id);
     }
+
+    @Override
+    public Carrer save(Carrer carrer) {
+        return carrerRepo.save(carrer);
+    }
 }

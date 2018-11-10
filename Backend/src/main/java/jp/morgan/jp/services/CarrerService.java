@@ -17,4 +17,6 @@ public interface CarrerService {
     List<Carrer> getAll();
 
     Carrer findById(Long id);
+
+    Carrer save(Carrer carrer);
 }
