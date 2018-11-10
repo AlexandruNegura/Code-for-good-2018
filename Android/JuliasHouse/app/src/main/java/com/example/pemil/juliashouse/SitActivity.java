@@ -1,6 +1,7 @@
 package com.example.pemil.juliashouse;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -13,6 +14,9 @@ public class SitActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sit_layout);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
         int id = getIntent().getIntExtra(NotificationUtils.ID, -1);
         Toast.makeText(getApplicationContext(), "Current sit is " + id, Toast.LENGTH_SHORT).show();
 

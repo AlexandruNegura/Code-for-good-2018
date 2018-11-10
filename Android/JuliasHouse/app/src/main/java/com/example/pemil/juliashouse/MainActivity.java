@@ -3,6 +3,7 @@ package com.example.pemil.juliashouse;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -83,9 +84,9 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext(), sits);
-        notificationUtils.createNotificationChannel();
-        notificationUtils.createNotificationGroup();
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
     }
 
     private ArrayList<Object> getSit() {
@@ -128,6 +129,11 @@ public class MainActivity extends AppCompatActivity {
         };
         // Adding the request to the queue along with a unique string tag
         MainActivity.getInstance().addToRequestQueue(jsonObjReq, "getRequest");
+
+        //TODO trebuie lista de Sit, nu null
+        NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext(), null);
+        notificationUtils.createNotificationChannel();
+        notificationUtils.createNotificationGroup();
     }
     public void openSit(View view) {
         Intent intent = new Intent(this, SitActivity.class);
