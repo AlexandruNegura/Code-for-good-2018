@@ -1,51 +1,77 @@
 package com.example.pemil.juliashouse;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 
-import com.example.pemil.juliashouse.Models.Sit;
-import com.example.pemil.juliashouse.notifications.NotificationUtils;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    //Declare a private RequestQueue variable
+    private RequestQueue requestQueue;
+    private static MainActivity mInstance;
+
+    private Context context;
+
+
+    public static synchronized MainActivity getInstance() {
+        return mInstance;
+    }
+    /*
+    Create a getRequestQueue() method to return the instance of
+    RequestQueue.This kind of implementation ensures that
+    the variable is instatiated only once and the same
+    instance is used throughout the application
+    */
+    public RequestQueue getRequestQueue() {
+        if (requestQueue == null)
+            requestQueue = Volley.newRequestQueue(getApplicationContext());
+        return requestQueue;
+    }
+    /*
+    public method to add the Request to the the single
+    instance of RequestQueue created above.Setting a tag to every
+    request helps in grouping them. Tags act as identifier
+    for requests and can be used while cancelling them
+    */
+    public void addToRequestQueue(Request request, String tag) {
+        request.setTag(tag);
+        getRequestQueue().add(request);
+    }
+    /*
+    Cancel all the requests matching with the given tag
+    */
+    public void cancelAllRequests(String tag) {
+        getRequestQueue().cancelAll(tag);
+    }
+
     private ArrayList<Object> sits = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Intent intent = getIntent();
+        int id = intent.getIntExtra("id", -1);
+        Log.i("ID",id + " ");
+
         RecyclerView recyclerView = findViewById(R.id.recycler_View);
         MainAdapter adapter = new MainAdapter(this, getSit());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        List<Sit> sits = new ArrayList<>();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        try {
-            Date start = simpleDateFormat.parse("10/11/2018 05:42");
-            Date end = simpleDateFormat.parse("10/11/2018 05:43");
-            sits.add(new Sit(0L, start, end, 5L, null));
-
-            start = simpleDateFormat.parse("10/11/2018 05:44");
-            end = simpleDateFormat.parse("10/11/2018 05:45");
-            sits.add(new Sit(1L, start, end, 6L, null));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-
-        NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext(), sits);
-        notificationUtils.createNotificationChannel();
-        notificationUtils.createNotificationGroup();
     }
 
     private ArrayList<Object> getSit() {

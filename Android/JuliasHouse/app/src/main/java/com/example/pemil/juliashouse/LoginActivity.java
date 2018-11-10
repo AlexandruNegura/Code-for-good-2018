@@ -71,6 +71,8 @@ public class LoginActivity extends AppCompatActivity {
         Boolean logged = false;
         String savedUser;
         String davedPassword;
+        int id;
+
         sharedPref = context.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         editor = sharedPref.edit();
@@ -85,11 +87,13 @@ public class LoginActivity extends AppCompatActivity {
         // Check if UserResponse is Already Logged In
         savedUser = sharedPref.getString("username", "");
         davedPassword = sharedPref.getString("password", "");
+        id = sharedPref.getInt("id", -1);
 
         logged = (savedUser != "") && (davedPassword != "");
 
         if (logged) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.putExtra("id", id);
             startActivity(intent);
         }
 
@@ -116,20 +120,30 @@ public class LoginActivity extends AppCompatActivity {
 
             JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                     requestUrl, postparams,
-                    new Response.Listener() {
+                    new Response.Listener<JSONObject>() {
                         @Override
-                        public void onResponse(Object response) {
+                        public void onResponse(JSONObject response) {
 
                             // caching the authentification details
                             Log.i("Auth successful",response.toString());
                             editor.putString("username", user);
                             editor.putString("password", passwd);
-                            editor.commit();
 
-                            // change intent
+                            try {
 
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(intent);
+                                editor.putInt("id", response.getInt("id"));
+                                editor.commit();
+
+                                // change intent
+
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                intent.putExtra("id", response.getInt("id"));
+                                startActivity(intent);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
 
                         }
 
