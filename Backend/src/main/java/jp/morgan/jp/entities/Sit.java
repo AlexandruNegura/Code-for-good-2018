@@ -5,6 +5,8 @@ import org.joda.time.DateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import java.util.List;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE,
                 setterVisibility = JsonAutoDetect.Visibility.ANY,
@@ -24,6 +26,9 @@ public class Sit extends IdEntity {
 
     @Column
     private Boolean canceled;
+
+    @ManyToMany(mappedBy = "sits")
+    private List<Carrer> carrerList;
 
     public Sit() {
     }
@@ -60,4 +65,11 @@ public class Sit extends IdEntity {
         this.canceled = canceled;
     }
 
+    public List<Carrer> getCarrerList() {
+        return carrerList;
+    }
+
+    public void setCarrerList(List<Carrer> carrerList) {
+        this.carrerList = carrerList;
+    }
 }

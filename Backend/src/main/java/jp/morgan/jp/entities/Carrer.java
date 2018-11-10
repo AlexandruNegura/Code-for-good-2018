@@ -1,10 +1,13 @@
 package jp.morgan.jp.entities;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jp.morgan.jp.Utils.UserType;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import java.util.List;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE,
@@ -24,6 +27,7 @@ public class Carrer extends IdEntity {
     @JsonIgnore
     private String password;
 
+    @JsonBackReference
     @ManyToMany
     private List<Sit> sits;
 
@@ -74,5 +78,13 @@ public class Carrer extends IdEntity {
 
     public void addSit(Sit sit) {
         sits.add(sit);
+    }
+
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
     }
 }

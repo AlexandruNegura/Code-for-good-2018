@@ -40,6 +40,7 @@ public class SitsController {
         Sit sit = modelMapper.map(sitModel, Sit.class);
 
         carrers.forEach(carrer -> carrer.addSit(sit));
+        sit.setCarrerList(carrers);
 
         sitService.addSit(sit);
 
