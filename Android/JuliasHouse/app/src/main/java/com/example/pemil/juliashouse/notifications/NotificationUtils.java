@@ -8,21 +8,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
+import com.example.pemil.juliashouse.Models.Sit;
+
 import java.util.List;
 
 public class NotificationUtils {
 
-    //TODO - change from Integer to Sit
-    private List<Integer> allSits;
+    private List<Sit> allSits;
 
     private Context context;
-    public static final String GROUP_KEY_NOTIFICATION = "com.example.pemil.juliashouse.notifications.NOTIFICATION";
-    public static final String ID = "id";
-    public static final String CHANNEL_ID = "notifications_channel";
-    public static final String CHANNEL_NAME = "Sits";
-    public static final String CHANNEL_DESCRIPTION = "Enable/Disable notifications for sits";
+    static final String GROUP_KEY_NOTIFICATION = "com.example.pemil.juliashouse.notifications.NOTIFICATION";
+    static final String ID = "id";
+    static final String CHANNEL_ID = "notifications_channel";
+    private static final String CHANNEL_NAME = "Sits";
+    private static final String CHANNEL_DESCRIPTION = "Enable/Disable notifications for sits";
 
-    public NotificationUtils(Context ctx, List<Integer> sits) {
+    public NotificationUtils(Context ctx, List<Sit> sits) {
         context = ctx;
         allSits = sits;
     }
@@ -45,6 +46,7 @@ public class NotificationUtils {
         if (allSits != null) {
             int notificationCount = 0;
             for (int i = 0; i < allSits.size(); i++) {
+                //TODO - get startTime and EndTime to compute the time till notification
                 long timeForStartDate = getTimeUntilNotification(allSits.get(i));
                 long timeForEndDate = getTimeUntilNotification(allSits.get(i));
 

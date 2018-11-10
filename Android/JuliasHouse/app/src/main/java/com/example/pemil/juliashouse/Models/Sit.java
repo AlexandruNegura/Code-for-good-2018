@@ -1,6 +1,7 @@
 package com.example.pemil.juliashouse.Models;
 
 import java.util.Date;
+import java.util.List;
 
 public class Sit {
 
