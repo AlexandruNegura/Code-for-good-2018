@@ -25,8 +25,9 @@ def sit_modify():
 
 @app.route('/carer')
 def carers():
-    data = requests.get('https://code-for-good.herokuapp.com/api/sit/getAll', json={}).json()
-    return render_template('carers-list', data=data, parse=dateparser.parse)
+    data = requests.get('https://code-for-good.herokuapp.com/api/user/getAll', json={}).json()
+    print(data)
+    return render_template('carers-list.html', data=data)
 
 @app.route('/carer/add')
 def carer_add():
