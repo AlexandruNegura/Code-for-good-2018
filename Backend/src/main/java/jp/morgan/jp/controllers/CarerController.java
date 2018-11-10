@@ -13,12 +13,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = CarrerController.USER_CONTROLLER_PATH, consumes = MediaType.APPLICATION_JSON_VALUE)
-public class CarrerController {
+@RequestMapping(value = CarerController.USER_CONTROLLER_PATH, consumes = MediaType.APPLICATION_JSON_VALUE)
+public class CarerController {
     static final String USER_CONTROLLER_PATH = "/api/user";
 
     @Autowired
@@ -77,5 +78,15 @@ public class CarrerController {
         Carrer carrer = carrerService.findById(id);
 
         return new ResponseEntity<>(carrer.getSits(), HttpStatus.OK);
+    }
+
+    @GetMapping("/get-all-not-home-safe")
+    public ResponseEntity<List<Carrer>> getCarrerNotHomeSafe() {
+        List<Carrer> carrers = carrerService.getAll();
+
+        List<Carrer> notHomeSafeCarrers = carrers.stream().filter(carrer -> !carrer.getGotHomeSafe()).collect(Collectors.toCollection(
+                ArrayList::new));
+
+        return new ResponseEntity<>(notHomeSafeCarrers, HttpStatus.OK);
     }
 }
