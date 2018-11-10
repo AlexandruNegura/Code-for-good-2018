@@ -43,7 +43,6 @@ def sit_add():
         data['carrersIds'] = [element for element in carer if element != 0]
 
         json_data = json.dumps(data)
-        print(json_data)
         headers = {
             'Content-Type': "application/json",
         }
@@ -79,7 +78,6 @@ def carer_add():
         data['username'] = username
         data['password'] = defpassword
         json_data = json.dumps(data)
-        print(json_data)
         headers = {
             'Content-Type': "application/json",
         }
@@ -93,7 +91,6 @@ def carer_add():
 @app.route('/carer/alert')
 def carers_missing():
     data = requests.get('https://code-for-good.herokuapp.com/api/user/get-all-not-home-safe', json={}).json()
-    print(data)
     return render_template('carers-list.html', data=data)
 
 
