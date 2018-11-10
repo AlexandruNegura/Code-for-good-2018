@@ -61,7 +61,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="8dp"
-        android:onClick="sendMessage"
+        android:onClick="cancelSit"
         android:text="Cancel"
         android:textSize="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -105,7 +105,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="60dp"
         android:text="@string/arrived_at_destination"
-        android:textSize="24dp"
+        android:textSize="@dimen/standard_text_size"
+        android:onClick="arrivedAtDestination"
         app:layout_constraintStart_toEndOf="@+id/imageView4"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
@@ -141,17 +142,19 @@
         android:layout_marginTop="28dp"
         android:text="Done"
         android:textSize="24dp"
+        android:onClick="sitDone"
         app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-    <TextView
+    <EditText
         android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="209dp"
+        android:layout_height="52dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
-        android:text="Add Comment"
+        android:layout_marginTop="16dp"
+        android:hint="Add Comment"
         android:textSize="24dp"
+        android:onClick="addComment"
         app:layout_constraintStart_toEndOf="@+id/imageView6"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
@@ -164,5 +167,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
         app:srcCompat="@drawable/plus" />
+
+    <Button
+        android:id="@+id/button_save"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="69dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Save"
+        android:textSize="18dp"
+        android:onClick="saveComment"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
 </android.support.constraint.ConstraintLayout>
