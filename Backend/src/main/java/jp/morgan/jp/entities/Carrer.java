@@ -34,6 +34,9 @@ public class Carrer extends IdEntity {
     @Column
     private UserType userType;
 
+    @Column
+    private Boolean isLateHome;
+
 
     public Carrer() {
     }
@@ -87,4 +90,6 @@ public class Carrer extends IdEntity {
     public void setUserType(UserType userType) {
         this.userType = userType;
     }
+
+
 }
