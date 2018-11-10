@@ -1,12 +1,12 @@
 package jp.morgan.jp.services;
 
-import jp.morgan.jp.entities.JpUser;
+import jp.morgan.jp.entities.Carrer;
 
 public interface UserService {
 
-    JpUser addUser(JpUser jpUser);
+    Carrer addUser(Carrer carrer);
 
-    JpUser findUserByUsername(String username);
+    Carrer findUserByUsername(String username);
 
     boolean rawPasswordMatchesDbPassword(String rawPassword, String dbPassword);
 

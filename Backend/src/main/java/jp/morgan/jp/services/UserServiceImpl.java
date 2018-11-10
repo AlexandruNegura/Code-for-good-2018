@@ -1,6 +1,6 @@
 package jp.morgan.jp.services;
 
-import jp.morgan.jp.entities.JpUser;
+import jp.morgan.jp.entities.Carrer;
 import jp.morgan.jp.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,19 +16,19 @@ public class UserServiceImpl implements UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public JpUser addUser(JpUser jpUser) {
-        encodePassword(jpUser);
+    public Carrer addUser(Carrer carrer) {
+        encodePassword(carrer);
 
-        return userRepo.save(jpUser);
+        return userRepo.save(carrer);
     }
 
     @Override
-    public JpUser findUserByUsername(String username) {
+    public Carrer findUserByUsername(String username) {
         return userRepo.findJpUserByUsername(username);
     }
 
-    private void encodePassword(JpUser jpUser) {
-        jpUser.setPassword(bCryptPasswordEncoder.encode(jpUser.getPassword()));
+    private void encodePassword(Carrer carrer) {
+        carrer.setPassword(bCryptPasswordEncoder.encode(carrer.getPassword()));
     }
 
     public boolean rawPasswordMatchesDbPassword(String rawPassword, String dbPassword) {

@@ -1,6 +1,6 @@
 package jp.morgan.jp.controllers;
 
-import jp.morgan.jp.entities.JpUser;
+import jp.morgan.jp.entities.Carrer;
 import jp.morgan.jp.models.UserLoginModel;
 import jp.morgan.jp.models.UserSignUpModel;
 import jp.morgan.jp.services.UserService;
@@ -23,26 +23,26 @@ public class UserController {
     private ModelMapper modelMapper;
 
     @PostMapping("/login")
-    ResponseEntity<JpUser> login(@RequestBody UserLoginModel userLoginModel) throws Exception {
+    ResponseEntity<Carrer> login(@RequestBody UserLoginModel userLoginModel) throws Exception {
 
-        JpUser jpUser = userService.findUserByUsername(userLoginModel.username);
+        Carrer carrer = userService.findUserByUsername(userLoginModel.username);
 
-        if (jpUser == null) {
+        if (carrer == null) {
             throw new Exception("Invalid username or password");
         }
 
-        if (!userService.rawPasswordMatchesDbPassword(userLoginModel.password, jpUser.getPassword())) {
+        if (!userService.rawPasswordMatchesDbPassword(userLoginModel.password, carrer.getPassword())) {
             throw new Exception("Invalid username or password");
         }
 
-        return new ResponseEntity<>(jpUser, HttpStatus.OK);
+        return new ResponseEntity<>(carrer, HttpStatus.OK);
     }
 
     @PostMapping("/add-user")
-    ResponseEntity<JpUser> addUser(@RequestBody UserSignUpModel user) {
-        JpUser jpUser = userService.addUser(modelMapper.map(user, JpUser.class));
+    ResponseEntity<Carrer> addUser(@RequestBody UserSignUpModel user) {
+        Carrer carrer = userService.addUser(modelMapper.map(user, Carrer.class));
 
-        return new ResponseEntity<>(jpUser, HttpStatus.OK);
+        return new ResponseEntity<>(carrer, HttpStatus.OK);
     }
 
 }

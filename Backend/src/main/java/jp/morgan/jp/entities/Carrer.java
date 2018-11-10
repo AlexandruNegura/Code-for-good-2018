@@ -4,13 +4,14 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.List;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE,
                 setterVisibility = JsonAutoDetect.Visibility.ANY,
                 getterVisibility = JsonAutoDetect.Visibility.ANY,
                 isGetterVisibility = JsonAutoDetect.Visibility.ANY)
 @Entity
-public class JpUser extends IdEntity {
+public class Carrer extends IdEntity {
 
     @Column
     private String name;
@@ -22,11 +23,14 @@ public class JpUser extends IdEntity {
     @JsonIgnore
     private String password;
 
+    @ManyToMany
+    private List<Sit> sits;
 
-    public JpUser() {
+
+    public Carrer() {
     }
 
-    public JpUser(String name, String username, String password) {
+    public Carrer(String name, String username, String password) {
         this.name = name;
         this.username = username;
         this.password = password;
@@ -54,5 +58,13 @@ public class JpUser extends IdEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Sit> getSits() {
+        return sits;
+    }
+
+    public void setSits(List<Sit> sits) {
+        this.sits = sits;
     }
 }
