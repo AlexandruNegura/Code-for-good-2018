@@ -22,7 +22,7 @@ public class LogController {
     @Autowired
     private LogService logService;
 
-    @GetMapping()
+    @GetMapping("")
     public ResponseEntity<List<Log>> getAllLogs() {
         return new ResponseEntity<>(logService.retrieveLogs(), OK);
     }
