@@ -84,7 +84,7 @@ public class CarerController {
     public ResponseEntity<List<Carrer>> getCarrerNotHomeSafe() {
         List<Carrer> carrers = carrerService.getAll();
 
-        List<Carrer> notHomeSafeCarrers = carrers.stream().filter(carrer -> !carrer.getGotHomeSafe()).collect(Collectors.toCollection(
+        List<Carrer> notHomeSafeCarrers = carrers.stream().filter(carrer -> carrer.getGotHomeSafe() != null && !carrer.getGotHomeSafe()).collect(Collectors.toCollection(
                 ArrayList::new));
 
         List<CarrerOutDTO> carrerOutDTOS = notHomeSafeCarrers.stream()
