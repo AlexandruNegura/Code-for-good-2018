@@ -2,6 +2,7 @@ package jp.morgan.jp.entities;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jp.morgan.jp.Utils.UserType;
 
 import javax.persistence.*;
 import java.util.List;
@@ -25,6 +26,9 @@ public class Carrer extends IdEntity {
 
     @ManyToMany
     private List<Sit> sits;
+
+    @Column
+    private UserType userType;
 
 
     public Carrer() {
@@ -66,5 +70,9 @@ public class Carrer extends IdEntity {
 
     public void setSits(List<Sit> sits) {
         this.sits = sits;
+    }
+
+    public void addSit(Sit sit) {
+        sits.add(sit);
     }
 }

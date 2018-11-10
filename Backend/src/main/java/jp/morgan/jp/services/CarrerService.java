@@ -2,7 +2,9 @@ package jp.morgan.jp.services;
 
 import jp.morgan.jp.entities.Carrer;
 
-public interface UserService {
+import java.util.List;
+
+public interface CarrerService {
 
     Carrer addUser(Carrer carrer);
 
@@ -10,4 +12,6 @@ public interface UserService {
 
     boolean rawPasswordMatchesDbPassword(String rawPassword, String dbPassword);
 
-    }
+    List<Carrer> findAllById(List<Long> ids);
+
+}
