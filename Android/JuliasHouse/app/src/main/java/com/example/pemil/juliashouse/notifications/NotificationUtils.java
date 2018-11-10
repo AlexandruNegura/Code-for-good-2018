@@ -10,6 +10,8 @@ import android.os.Build;
 
 import com.example.pemil.juliashouse.Models.Sit;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class NotificationUtils {
@@ -44,40 +46,41 @@ public class NotificationUtils {
 
     public void createNotificationGroup() {
         if (allSits != null) {
-            int notificationCount = 0;
+            int countTimes = 0;
             for (int i = 0; i < allSits.size(); i++) {
-                //TODO - get startTime and EndTime to compute the time till notification
-                long timeForStartDate = getTimeUntilNotification(allSits.get(i));
-                long timeForEndDate = getTimeUntilNotification(allSits.get(i));
+                // get startTime and EndTime to compute the time till notification
+                long timeForStartDate = getTimeUntilNotification(allSits.get(i).getStartDate());
+                long timeForEndDate = getTimeUntilNotification(allSits.get(i).getEndDate());
 
                 AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
                 //check if needed 2 intents and 2 pendingIntents
                 Intent notifyIntentforStart = new Intent(context, NotificationReceiver.class);
-                notifyIntentforStart.putExtra(ID, notificationCount);
+                notifyIntentforStart.putExtra(ID, countTimes);
                 PendingIntent pendingIntentforStart = PendingIntent.getBroadcast(context,
                         0,
                         notifyIntentforStart,
                         PendingIntent.FLAG_UPDATE_CURRENT);
+                countTimes++;
 
                 alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeForStartDate, pendingIntentforStart);
-                notificationCount++;
 
                 Intent notifyIntentForEnd = new Intent(context, NotificationReceiver.class);
-                notifyIntentforStart.putExtra(ID, notificationCount);
+                notifyIntentforStart.putExtra(ID, countTimes);
                 PendingIntent pendintIntentForEnd = PendingIntent.getBroadcast(context,
                         0,
                         notifyIntentForEnd,
                         PendingIntent.FLAG_UPDATE_CURRENT);
+                countTimes++;
 
                 alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeForEndDate, pendintIntentForEnd);
-                notificationCount++;
             }
         }
     }
 
-    //TODO - implement this method
-    private int getTimeUntilNotification(int val) {
-        return val;
+    private long getTimeUntilNotification(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.getTimeInMillis();
     }
 }

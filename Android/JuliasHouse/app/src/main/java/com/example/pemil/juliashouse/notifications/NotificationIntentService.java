@@ -18,20 +18,20 @@ public class NotificationIntentService extends IntentService {
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         int id = intent.getIntExtra(NotificationUtils.ID, -1);
-        //TODO - modify EmptyActivity to SitActivity when created
+        //DONE - modify EmptyActivity to SitActivity when created
         Intent newIntent = new Intent(NotificationIntentService.this, SitActivity.class);
-        newIntent.putExtra(NotificationUtils.ID, id);
+        //TODO - pune de fapt id / 2 (pentru sit cu id i --> notif start i * 2 si end i * 2 + 1
+        newIntent.putExtra(NotificationUtils.ID, id / 2);
         newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         //DONE - change request code to UNIQUE ID
         PendingIntent pendingIntent = PendingIntent.getActivity(this, id, newIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        //TODO - modify notification based on current sit - TO GET EXTRA
+        //DONE - modify notification based on current sit - TO GET EXTRA
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, NotificationUtils.CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_background)
-                .setContentTitle("titlu")
-                .setContentText("context")
+                .setContentTitle("Sit no" + id)
+                .setContentText("context for " + id)
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)
-                .setGroup(NotificationUtils.GROUP_KEY_NOTIFICATION)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);

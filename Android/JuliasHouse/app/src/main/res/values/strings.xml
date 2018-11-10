@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Julia\'s House Alert Service</string>
-    <string name="app_name">JuliasHouse</string>
     <string name="arrived_at_destination">Arrived at Destination</string>
     <string-array name="delay_values">
         <item>30 min</item>

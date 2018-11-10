@@ -15,6 +15,14 @@ public class Sit {
 
     }
 
+    public Sit(Long id, Date startDate, Date endDate, Long patientId, List<Carrer> carrerList) {
+        this.id = id;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.patientId = patientId;
+        this.carrerList = carrerList;
+    }
+
     public Long getId() {
         return id;
     }
