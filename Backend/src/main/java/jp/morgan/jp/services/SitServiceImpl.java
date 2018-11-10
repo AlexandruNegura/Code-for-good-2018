@@ -22,4 +22,10 @@ public class SitServiceImpl implements SitService {
     public List<Sit> getAllSits() {
         return sitRepository.findAll();
     }
+
+    @Override
+    public Sit getSitById(Long id) {
+
+        return sitRepository.getOne(id);
+    }
 }

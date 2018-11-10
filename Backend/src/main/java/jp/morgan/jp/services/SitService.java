@@ -8,4 +8,6 @@ public interface SitService {
     Sit addSit(Sit sit);
 
     List<Sit> getAllSits();
+
+    Sit getSitById(Long id);
 }
