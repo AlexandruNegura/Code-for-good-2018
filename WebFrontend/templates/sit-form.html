@@ -8,7 +8,7 @@
   <meta name="description" content="Robust admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
   <meta name="keywords" content="admin template, robust admin template, dashboard template, flat admin template, responsive admin template, web app">
   <meta name="author" content="PIXINVENT">
-  <title>Basic Forms - Robust Free Bootstrap Admin Template</title>
+  <title>Add new sit</title>
   <link rel="apple-touch-icon" sizes="60x60" href="../static/app-assets/images/ico/apple-icon-60.png">
   <link rel="apple-touch-icon" sizes="76x76" href="../static/app-assets/images/ico/apple-icon-76.png">
   <link rel="apple-touch-icon" sizes="120x120" href="../static/app-assets/images/ico/apple-icon-120.png">
@@ -56,35 +56,31 @@
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header">
-                  <h4 class="card-title" id="basic-layout-icons">Timesheet</h4>
+                  <h4 class="card-title" id="basic-layout-icons">Add new sit</h4>
                   <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
                   <div class="heading-elements">
                     <ul class="list-inline mb-0">
-                      <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
-                      <li><a data-action="reload"><i class="icon-reload"></i></a></li>
                       <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
-                      <li><a data-action="close"><i class="icon-cross2"></i></a></li>
                     </ul>
                   </div>
                 </div>
                 <div class="card-body collapse in">
                   <div class="card-block">
-                    <form class="form">
+                    <form class="form" formmethod="post">
                       <div class="form-body">
                         <div class="form-group">
-                          <label for="timesheetinput1">Employee Name</label>
+                          <label for="timesheetinput1">Patient ID</label>
                           <div class="position-relative has-icon-left">
-                            <input type="text" id="timesheetinput1" class="form-control" placeholder="employee name"
-                              name="employeename">
+                            <input type="text" id="patientId" class="form-control" placeholder="Patient ID" name="patientId">
                             <div class="form-control-position">
                               <i class="icon-head"></i>
                             </div>
                           </div>
                         </div>
                         <div class="form-group">
-                          <label for="timesheetinput3">Date</label>
+                          <label for="dateinput">Date</label>
                           <div class="position-relative has-icon-left">
-                            <input type="date" id="timesheetinput3" class="form-control" name="date">
+                            <input type="date" id="dateinput" class="form-control" name="dateinput">
                             <div class="form-control-position">
                               <i class="icon-calendar5"></i>
                             </div>
@@ -93,9 +89,9 @@
                         <div class="row">
                           <div class="col-md-6">
                             <div class="form-group">
-                              <label for="timesheetinput5">Start Time</label>
+                              <label for="starttimeinput">Start Time</label>
                               <div class="position-relative has-icon-left">
-                                <input type="time" id="timesheetinput5" class="form-control" name="starttime">
+                                <input type="time" id="starttimeinput" class="form-control" name="starttimeinput">
                                 <div class="form-control-position">
                                   <i class="icon-clock5"></i>
                                 </div>
@@ -104,9 +100,9 @@
                           </div>
                           <div class="col-md-6">
                             <div class="form-group">
-                              <label for="timesheetinput6">End Time</label>
+                              <label for="endtimeinput">End Time</label>
                               <div class="position-relative has-icon-left">
-                                <input type="time" id="timesheetinput6" class="form-control" name="endtime">
+                                <input type="time" id="endtimeinput" class="form-control" name="endtimeinput">
                                 <div class="form-control-position">
                                   <i class="icon-clock5"></i>
                                 </div>
@@ -114,22 +110,81 @@
                             </div>
                           </div>
                         </div>
-                        <div class="form-group">
-                          <label for="issueinput5">Priority</label>
-                          <select id="issueinput5" name="priority" class="form-control" data-toggle="tooltip"
-                            data-trigger="hover" data-placement="top" data-title="Priority" data-original-title=""
-                            title="">
-                            <option value="low">Low</option>
-                            <option value="medium">Medium</option>
-                            <option value="high">High</option>
-                          </select>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="carer_1_input">Carer 1</label>
+                              <select id="carer_1_input" name="carer_1_input" class="form-control" data-toggle="tooltip"
+                                data-trigger="hover" data-placement="top" data-title="Carer 1" data-original-title=""
+                                title="">
+                                <option value="0">Choose a carer</option>
+                                {% for carer in carers %}<option value="{{ carer.id }}">{{ carer.name }}</option>{%
+                                endfor %}
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="carer_2_input">Carer 2</label>
+                              <select id="carer_2_input" name="carer_2_input" class="form-control" data-toggle="tooltip"
+                                data-trigger="hover" data-placement="top" data-title="Carer 2" data-original-title=""
+                                title="">
+                                <option value="0">Choose a carer</option>
+                                {% for carer in carers %}<option value="{{ carer.id }}">{{ carer.name }}</option>{%
+                                endfor %}
+                              </select>
+                            </div>
+                          </div>
                         </div>
-                        <div class="form-group">
-                          <label for="timesheetinput7">Notes</label>
-                          <div class="position-relative has-icon-left">
-                            <textarea id="timesheetinput7" rows="5" class="form-control" name="notes" placeholder="notes"></textarea>
-                            <div class="form-control-position">
-                              <i class="icon-file2"></i>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="carer_3_input">Carer 3</label>
+                              <select id="carer_3_input" name="carer_3_input" class="form-control" data-toggle="tooltip"
+                                data-trigger="hover" data-placement="top" data-title="Carer 3" data-original-title=""
+                                title="">
+                                <option value="0">Choose a carer</option>
+                                {% for carer in carers %}<option value="{{ carer.id }}">{{ carer.name }}</option>{%
+                                endfor %}
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="carer_4_input">Carer 4</label>
+                              <select id="carer_4_input" name="carer_4_input" class="form-control" data-toggle="tooltip"
+                                data-trigger="hover" data-placement="top" data-title="Carer 4" data-original-title=""
+                                title="">
+                                <option value="0">Choose a carer</option>
+                                {% for carer in carers %}<option value="{{ carer.id }}">{{ carer.name }}</option>{%
+                                endfor %}
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="carer_5_input">Carer 5</label>
+                              <select id="carer_5_input" name="carer_5_input" class="form-control" data-toggle="tooltip"
+                                data-trigger="hover" data-placement="top" data-title="Carer 5" data-original-title=""
+                                title="">
+                                <option value="0">Choose a carer</option>
+                                {% for carer in carers %}<option value="{{ carer.id }}">{{ carer.name }}</option>{%
+                                endfor %}
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="carer_6_input">Carer 6</label>
+                              <select id="carer_6_input" name="carer_6_input" class="form-control" data-toggle="tooltip"
+                                data-trigger="hover" data-placement="top" data-title="Carer 6" data-original-title=""
+                                title="">
+                                <option value="0">Choose a carer</option>
+                                {% for carer in carers %}<option value="{{ carer.id }}">{{ carer.name }}</option>{%
+                                endfor %}
+                              </select>
                             </div>
                           </div>
                         </div>
@@ -139,7 +194,7 @@
                         <button type="button" class="btn btn-warning mr-1">
                           <i class="icon-cross2"></i> Cancel
                         </button>
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" formmethod="post" class="btn btn-primary">
                           <i class="icon-check2"></i> Save
                         </button>
                       </div>
