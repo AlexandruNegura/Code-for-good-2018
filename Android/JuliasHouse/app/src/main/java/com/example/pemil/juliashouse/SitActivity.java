@@ -4,12 +4,17 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.example.pemil.juliashouse.notifications.NotificationUtils;
 
 public class SitActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sit_layout);
+        int id = getIntent().getIntExtra(NotificationUtils.ID, -1);
+        Toast.makeText(getApplicationContext(), "Current sit is " + id, Toast.LENGTH_SHORT).show();
 
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout

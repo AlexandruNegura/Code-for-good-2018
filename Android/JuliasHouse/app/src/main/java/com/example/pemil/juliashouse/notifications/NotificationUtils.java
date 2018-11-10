@@ -19,8 +19,7 @@ public class NotificationUtils {
     private List<Sit> allSits;
 
     private Context context;
-    static final String GROUP_KEY_NOTIFICATION = "com.example.pemil.juliashouse.notifications.NOTIFICATION";
-    static final String ID = "id";
+    public static final String ID = "id";
     static final String CHANNEL_ID = "notifications_channel";
     private static final String CHANNEL_NAME = "Sits";
     private static final String CHANNEL_DESCRIPTION = "Enable/Disable notifications for sits";
@@ -47,33 +46,32 @@ public class NotificationUtils {
     public void createNotificationGroup() {
         if (allSits != null) {
             int countTimes = 0;
+            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
             for (int i = 0; i < allSits.size(); i++) {
                 // get startTime and EndTime to compute the time till notification
                 long timeForStartDate = getTimeUntilNotification(allSits.get(i).getStartDate());
                 long timeForEndDate = getTimeUntilNotification(allSits.get(i).getEndDate());
 
-                AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-
                 //check if needed 2 intents and 2 pendingIntents
                 Intent notifyIntentforStart = new Intent(context, NotificationReceiver.class);
                 notifyIntentforStart.putExtra(ID, countTimes);
                 PendingIntent pendingIntentforStart = PendingIntent.getBroadcast(context,
-                        0,
+                        countTimes,
                         notifyIntentforStart,
-                        PendingIntent.FLAG_UPDATE_CURRENT);
-                countTimes++;
+                        0);
 
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeForStartDate, pendingIntentforStart);
+                countTimes++;
+                alarmManager.set(AlarmManager.RTC_WAKEUP, timeForStartDate, pendingIntentforStart);
 
                 Intent notifyIntentForEnd = new Intent(context, NotificationReceiver.class);
-                notifyIntentforStart.putExtra(ID, countTimes);
+                notifyIntentForEnd.putExtra(ID, countTimes);
                 PendingIntent pendintIntentForEnd = PendingIntent.getBroadcast(context,
-                        0,
+                        countTimes,
                         notifyIntentForEnd,
-                        PendingIntent.FLAG_UPDATE_CURRENT);
+                        0);
                 countTimes++;
 
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeForEndDate, pendintIntentForEnd);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, timeForEndDate, pendintIntentForEnd);
             }
         }
     }

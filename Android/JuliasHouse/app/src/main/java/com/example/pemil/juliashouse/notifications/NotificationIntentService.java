@@ -24,7 +24,7 @@ public class NotificationIntentService extends IntentService {
         newIntent.putExtra(NotificationUtils.ID, id / 2);
         newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         //DONE - change request code to UNIQUE ID
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, id, newIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, id, newIntent, 0);
         //DONE - modify notification based on current sit - TO GET EXTRA
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, NotificationUtils.CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_background)
@@ -32,6 +32,7 @@ public class NotificationIntentService extends IntentService {
                 .setContentText("context for " + id)
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)
+                .setGroup("sit")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);

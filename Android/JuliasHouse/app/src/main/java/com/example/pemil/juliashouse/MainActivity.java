@@ -31,12 +31,12 @@ public class MainActivity extends AppCompatActivity {
         List<Sit> sits = new ArrayList<>();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         try {
-            Date start = simpleDateFormat.parse("10/11/2018 05:42");
-            Date end = simpleDateFormat.parse("10/11/2018 05:43");
+            Date start = simpleDateFormat.parse("10/11/2018 8:01");
+            Date end = simpleDateFormat.parse("10/11/2018 8:02");
             sits.add(new Sit(0L, start, end, 5L, null));
 
-            start = simpleDateFormat.parse("10/11/2018 05:44");
-            end = simpleDateFormat.parse("10/11/2018 05:45");
+            start = simpleDateFormat.parse("10/11/2018 8:03");
+            end = simpleDateFormat.parse("10/11/2018 8:04");
             sits.add(new Sit(1L, start, end, 6L, null));
         } catch (ParseException e) {
             e.printStackTrace();
@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         notificationUtils.createNotificationChannel();
         notificationUtils.createNotificationGroup();
     }
+
 
     private ArrayList<Object> getSit() {
         sits.add(getVerticalData().get(0));
