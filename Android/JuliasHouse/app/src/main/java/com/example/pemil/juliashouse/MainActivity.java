@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<Object> getObject() {
         objects.add(getVerticalData().get(0));
-        objects.add(getHorizontalData().get(0));
+//        objects.add(getHorizontalData().get(0));
         return objects;
     }
 
@@ -35,16 +35,4 @@ public class MainActivity extends AppCompatActivity {
 
         return singleVerticals;
     }
-
-
-    public static ArrayList<SingleHorizontal> getHorizontalData() {
-        ArrayList<SingleHorizontal> singleHorizontals = new ArrayList<>();
-        singleHorizontals.add(new SingleHorizontal(R.mipmap.charlie, "Charlie Chaplin", "Sir Charles Spencer \"Charlie\" Chaplin, KBE was an English comic actor,....", "2010/2/1"));
-        singleHorizontals.add(new SingleHorizontal(R.mipmap.bean, "Mr.Bean", "Mr. Bean is a British sitcom created by Rowan Atkinson and Richard Curtis, and starring Atkinson as the title character.", "2010/2/1"));
-        singleHorizontals.add(new SingleHorizontal(R.mipmap.bean, "Mr.Bean", "Mr. Bean is a British sitcom created by Rowan Atkinson and Richard Curtis, and starring Atkinson as the title character.", "2010/2/1"));
-
-        return singleHorizontals;
-    }
-
-
 }

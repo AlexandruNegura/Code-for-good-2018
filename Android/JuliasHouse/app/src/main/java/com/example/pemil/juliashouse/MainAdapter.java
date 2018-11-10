@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-import static com.example.pemil.juliashouse.MainActivity.getHorizontalData;
 import static com.example.pemil.juliashouse.MainActivity.getVerticalData;
 
 public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -17,7 +16,6 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private ArrayList<Object> items;
     private final int VERTICAL = 1;
-    private final int HORIZONTAL = 2;
 
     public MainAdapter(Context context, ArrayList<Object> items) {
         this.context = context;
@@ -28,8 +26,6 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public int getItemViewType(int position) {
         if (items.get(position) instanceof SingleVertical)
             return VERTICAL;
-        if (items.get(position) instanceof SingleHorizontal)
-            return HORIZONTAL;
         return -1;
     }
     //this method returns the holder that we've inflated according to the viewtype.
@@ -43,13 +39,9 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 view = inflater.inflate(R.layout.vertical, parent, false);
                 holder = new VerticalViewHolder(view);
                 break;
-            case HORIZONTAL:
-                view = inflater.inflate(R.layout.horizontal, parent, false);
-                holder = new HorizontalViewHolder(view);
-                break;
 
             default:
-                view = inflater.inflate(R.layout.horizontal, parent, false);
+                view = inflater.inflate(R.layout.vertical, parent, false);
                 holder = new HorizontalViewHolder(view);
                 break;
         }
@@ -62,8 +54,6 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder.getItemViewType() == VERTICAL)
             verticalView((VerticalViewHolder) holder);
-        else if (holder.getItemViewType() == HORIZONTAL)
-            horizontalView((HorizontalViewHolder) holder);
     }
 
     private void verticalView(VerticalViewHolder holder) {
@@ -71,13 +61,6 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         VerticalAdapter adapter1 = new VerticalAdapter(getVerticalData());
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
         holder.recyclerView.setAdapter(adapter1);
-    }
-
-
-    private void horizontalView(HorizontalViewHolder holder) {
-        HorizontalAdapter adapter = new HorizontalAdapter(getHorizontalData());
-        holder.recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-        holder.recyclerView.setAdapter(adapter);
     }
 
 
