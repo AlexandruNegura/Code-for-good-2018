@@ -26,10 +26,9 @@ public class LoginActivity extends AppCompatActivity {
     private RequestQueue requestQueue;
     private static LoginActivity mInstance;
 
-    private Context context = this;
-    private SharedPreferences sharedPref = context.getSharedPreferences(
-            getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-    private SharedPreferences.Editor editor = sharedPref.edit();
+    private Context context;
+    private SharedPreferences sharedPref;
+    private SharedPreferences.Editor editor;
     private EditText usernameEditText;
     private EditText passwordEditText;
 
@@ -68,12 +67,15 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        context = this;
         Boolean logged = false;
         String savedUser;
         String davedPassword;
+        sharedPref = context.getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        editor = sharedPref.edit();
 
-        usernameEditText = findViewById(R.id.username);
-        passwordEditText = findViewById(R.id.input_user_password);
+
 
 
         super.onCreate(savedInstanceState);
@@ -101,8 +103,13 @@ public class LoginActivity extends AppCompatActivity {
         String requestUrl = "https://code-for-good.herokuapp.com/api/user/login";
         JSONObject postparams = new JSONObject();
 
+        usernameEditText = findViewById(R.id.username);
+        passwordEditText = findViewById(R.id.input_user_password);
+
+
         final String user = usernameEditText.getText().toString();
         final String passwd = passwordEditText.getText().toString();
+        Log.i("DANA", user + " " + passwd);
         try {
             postparams.put("username", user);
             postparams.put("password", passwd);
