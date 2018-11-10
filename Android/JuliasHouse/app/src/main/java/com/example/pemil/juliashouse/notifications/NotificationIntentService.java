@@ -7,8 +7,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.example.pemil.juliashouse.R;
 import com.example.pemil.juliashouse.SitActivity;
+
+import org.json.JSONObject;
 
 public class NotificationIntentService extends IntentService {
     public NotificationIntentService() {
@@ -17,11 +21,19 @@ public class NotificationIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
+//        Boolean isHomeSafeValid = intent.getBooleanExtra(NotificationUtils.HOME_SAFE, false);
+//        if (isHomeSafeValid != null) {
+//            Boolean getValueFromDB = checkIfHomeSafe()
+//        }
+
+        createNotification(intent);
+    }
+
+    private void createNotification(Intent intent) {
         int id = intent.getIntExtra(NotificationUtils.ID, -1);
         //DONE - modify EmptyActivity to SitActivity when created
         Intent newIntent = new Intent(NotificationIntentService.this, SitActivity.class);
-        //TODO - pune de fapt id / 2 (pentru sit cu id i --> notif start i * 2 si end i * 2 + 1
-        newIntent.putExtra(NotificationUtils.ID, id / 2);
+        newIntent.putExtra(NotificationUtils.ID, id / 3);
         newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         //DONE - change request code to UNIQUE ID
         PendingIntent pendingIntent = PendingIntent.getActivity(this, id, newIntent, 0);
@@ -40,5 +52,12 @@ public class NotificationIntentService extends IntentService {
         // notificationId is a unique int for each notification that you must define
         //DONE - change id to UNIQUE ID
         notificationManager.notify(id, mBuilder.build());
+    }
+
+    private boolean checkIfHomeSafe(long id) {
+        RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
+        String requestUrl = "https://code-for-good.herokuapp.com/api/user/login";
+        JSONObject postparams = new JSONObject();
+        return false;
     }
 }

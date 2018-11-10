@@ -16,6 +16,7 @@ import java.util.List;
 
 public class NotificationUtils {
 
+    static final String HOME_SAFE = "home_safe";
     private List<Sit> allSits;
 
     private Context context;
@@ -52,7 +53,7 @@ public class NotificationUtils {
                 long timeForStartDate = getTimeUntilNotification(allSits.get(i).getStartDate());
                 long timeForEndDate = getTimeUntilNotification(allSits.get(i).getEndDate());
 
-                //check if needed 2 intents and 2 pendingIntents
+                //code for the start time
                 Intent notifyIntentforStart = new Intent(context, NotificationReceiver.class);
                 notifyIntentforStart.putExtra(ID, countTimes);
                 PendingIntent pendingIntentforStart = PendingIntent.getBroadcast(context,
@@ -63,6 +64,7 @@ public class NotificationUtils {
                 countTimes++;
                 alarmManager.set(AlarmManager.RTC_WAKEUP, timeForStartDate, pendingIntentforStart);
 
+                //end time
                 Intent notifyIntentForEnd = new Intent(context, NotificationReceiver.class);
                 notifyIntentForEnd.putExtra(ID, countTimes);
                 PendingIntent pendintIntentForEnd = PendingIntent.getBroadcast(context,
@@ -72,6 +74,18 @@ public class NotificationUtils {
                 countTimes++;
 
                 alarmManager.set(AlarmManager.RTC_WAKEUP, timeForEndDate, pendintIntentForEnd);
+
+                //2 hours after end time
+                Intent notifyIntentForHomeSafe = new Intent(context, NotificationReceiver.class);
+                notifyIntentForHomeSafe.putExtra(ID, countTimes);
+                notifyIntentForHomeSafe.putExtra(HOME_SAFE, false);
+                PendingIntent pendintIntentForHomeSafe = PendingIntent.getBroadcast(context,
+                        countTimes,
+                        notifyIntentForHomeSafe,
+                        0);
+                countTimes++;
+
+                alarmManager.set(AlarmManager.RTC_WAKEUP, timeForEndDate + 1000 * 60 * 60 * 2, pendintIntentForHomeSafe);
             }
         }
     }
