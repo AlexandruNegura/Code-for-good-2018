@@ -35,7 +35,13 @@ public class Carrer extends IdEntity {
     private UserType userType;
 
     @Column
-    private Boolean isLateHome;
+    private Boolean gotToChildSafe;
+
+    @Column
+    private Boolean leftFromChildSafe;
+
+    @Column
+    private Boolean gotHomeSafe;
 
 
     public Carrer() {
@@ -91,5 +97,27 @@ public class Carrer extends IdEntity {
         this.userType = userType;
     }
 
+    public Boolean getGotToChildSafe() {
+        return gotToChildSafe;
+    }
 
+    public void setGotToChildSafe(Boolean gotToChildSafe) {
+        this.gotToChildSafe = gotToChildSafe;
+    }
+
+    public Boolean getLeftFromChildSafe() {
+        return leftFromChildSafe;
+    }
+
+    public void setLeftFromChildSafe(Boolean leftFromChildSafe) {
+        this.leftFromChildSafe = leftFromChildSafe;
+    }
+
+    public Boolean getGotHomeSafe() {
+        return gotHomeSafe;
+    }
+
+    public void setGotHomeSafe(Boolean gotHomeSafe) {
+        this.gotHomeSafe = gotHomeSafe;
+    }
 }

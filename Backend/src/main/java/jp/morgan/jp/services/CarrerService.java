@@ -15,4 +15,8 @@ public interface CarrerService {
     List<Carrer> findAllById(List<Long> ids);
 
     List<Carrer> getAll();
+
+    Carrer findById(Long id);
+
+    Carrer save(Carrer carrer);
 }
