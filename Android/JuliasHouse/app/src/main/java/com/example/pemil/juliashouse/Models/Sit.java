@@ -62,4 +62,15 @@ public class Sit {
     public void setCarrerList(List<Carrer> carrerList) {
         this.carrerList = carrerList;
     }
+
+    @Override
+    public String toString() {
+        return "Sit{" +
+                "id=" + id +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", patientId=" + patientId +
+                ", carrerList=" + carrerList +
+                '}';
+    }
 }
