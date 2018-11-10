@@ -8,6 +8,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
 import com.example.pemil.juliashouse.R;
+import com.example.pemil.juliashouse.SitActivity;
 
 public class NotificationIntentService extends IntentService {
     public NotificationIntentService() {
