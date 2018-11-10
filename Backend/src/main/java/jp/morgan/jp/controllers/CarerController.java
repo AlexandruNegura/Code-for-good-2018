@@ -87,6 +87,21 @@ public class CarerController {
         List<Carrer> notHomeSafeCarrers = carrers.stream().filter(carrer -> !carrer.getGotHomeSafe()).collect(Collectors.toCollection(
                 ArrayList::new));
 
+        List<CarrerOutDTO> carrerOutDTOS = notHomeSafeCarrers.stream()
+                                                  .map(carrer -> modelMapper.map(carrer, CarrerOutDTO.class))
+                                                  .collect(
+                                                          Collectors.toList());
+
+        for (Carrer carrer : notHomeSafeCarrers) {
+            CarrerOutDTO carrerOutDTO = carrerOutDTOS.stream()
+                                                     .filter(carrerOutDTO1 -> carrerOutDTO1.id.equals(carrer.getId()))
+                                                     .findFirst()
+                                                     .get();
+            for (Sit sit : carrer.getSits()) {
+                carrerOutDTO.sitsId.add(sit.getId());
+            }
+        }
+
         return new ResponseEntity<>(notHomeSafeCarrers, HttpStatus.OK);
     }
 }
