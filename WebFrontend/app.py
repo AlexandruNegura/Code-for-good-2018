@@ -1,4 +1,5 @@
 from flask import Flask, render_template, redirect
+import requests
 
 app = Flask(__name__)
 
@@ -9,7 +10,9 @@ def hello_world():
 
 @app.route('/sit')
 def sits():
-    return render_template('index.html')
+    data = requests.get('https://code-for-good.herokuapp.com/api/sit/getAll', json={}).json()
+    print(data)
+    return render_template('index.html', data=data)
 
 @app.route('/sit/add')
 def sit_add():
@@ -21,15 +24,15 @@ def sit_modify():
 
 @app.route('/carer')
 def carers():
-    return render_template('index.html');
+    return render_template('index.html')
 
 @app.route('/carer/add')
 def carer_add():
-    return render_template('carer-form.html');
+    return render_template('carer-form.html')
 
 @app.route('/carer/modify')
 def carer_modify():
-    return render_template('carer-form.html');
+    return render_template('carer-form.html')
 
 @app.route('/404')
 def error404():
