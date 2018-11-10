@@ -16,5 +16,5 @@ public class CarrerOutDTO {
 
     public UserType userType;
 
-    public Boolean isLateHome;
+    public Boolean gotHomeSafe;
 }
