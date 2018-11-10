@@ -11,6 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = CarrerController.USER_CONTROLLER_PATH, consumes = MediaType.APPLICATION_JSON_VALUE)
 public class CarrerController {
@@ -43,6 +45,11 @@ public class CarrerController {
         Carrer carrer = carrerService.addUser(modelMapper.map(user, Carrer.class));
 
         return new ResponseEntity<>(carrer, HttpStatus.OK);
+    }
+
+    @GetMapping("/getAll")
+    ResponseEntity<List<Carrer>> getAllCarers() {
+        return new ResponseEntity<>(carrerService.getAll(), HttpStatus.OK);
     }
 
 }
