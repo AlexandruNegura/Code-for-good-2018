@@ -22,6 +22,7 @@ import com.google.gson.reflect.TypeToken;
 import org.json.JSONArray;
 
 import java.lang.reflect.Type;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayList<SingleVertical> singleVerticals = new ArrayList<>();
         for (Sit s : sit) {
-            singleVerticals.add(new SingleVertical(s.getPatientId().toString(), s.getStartDate().toString(), s.getEndDate().toString(), R.drawable.task4));
+            singleVerticals.add(new SingleVertical(s.getPatientId().toString(), DateFormat.getDateTimeInstance().format(s.getStartDate()), DateFormat.getDateTimeInstance().format(s.getEndDate()), R.drawable.task4));
         }
 //        singleVerticals.add(new SingleVertical("Sit 1", "10/11/2018", "10/11/2018", R.drawable.task3));
 //        singleVerticals.add(new SingleVertical("Sit 2","10/11/2018", "10/11/2018" , R.drawable.task4));
