@@ -13,11 +13,14 @@ import java.util.List;
 public class NotificationUtils {
 
     //TODO - change from Integer to Sit
-    List<Integer> allSits;
+    private List<Integer> allSits;
 
-    Context context;
+    private Context context;
     public static final String GROUP_KEY_NOTIFICATION = "com.example.pemil.juliashouse.notifications.NOTIFICATION";
     public static final String ID = "id";
+    public static final String CHANNEL_ID = "notifications_channel";
+    public static final String CHANNEL_NAME = "Sits";
+    public static final String CHANNEL_DESCRIPTION = "Enable/Disable notifications for sits";
 
     public NotificationUtils(Context ctx, List<Integer> sits) {
         context = ctx;
@@ -28,11 +31,9 @@ public class NotificationUtils {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "channel_name";
-            String description = "channel_description";
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("ceva", name, importance);
-            channel.setDescription(description);
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, importance);
+            channel.setDescription(CHANNEL_DESCRIPTION);
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
             NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
@@ -44,8 +45,8 @@ public class NotificationUtils {
         if (allSits != null) {
             int notificationCount = 0;
             for (int i = 0; i < allSits.size(); i++) {
-                long timeForStartDate = getTimeUntilNotification(allSits[i]);
-                long timeForEndDate = getTimeUntilNotification(allSits[i]);
+                long timeForStartDate = getTimeUntilNotification(allSits.get(i));
+                long timeForEndDate = getTimeUntilNotification(allSits.get(i));
 
                 AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
@@ -75,6 +76,6 @@ public class NotificationUtils {
 
     //TODO - implement this method
     private int getTimeUntilNotification(int val) {
-        return 0;
+        return val;
     }
 }

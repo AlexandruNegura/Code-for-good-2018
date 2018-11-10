@@ -16,14 +16,15 @@ public class NotificationIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
+        int id = intent.getIntExtra(NotificationUtils.ID, -1);
         //TODO - modify EmptyActivity to SitActivity when created
         Intent newIntent = new Intent(NotificationIntentService.this, SitActivity.class);
-        newIntent.putExtra("test", "test");
+        newIntent.putExtra(NotificationUtils.ID, id);
         newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        //TODO - change request code to UNIQUE ID
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, newIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        //DONE - change request code to UNIQUE ID
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, id, newIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         //TODO - modify notification based on current sit - TO GET EXTRA
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "ceva")
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, NotificationUtils.CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_background)
                 .setContentTitle("titlu")
                 .setContentText("context")
@@ -35,7 +36,7 @@ public class NotificationIntentService extends IntentService {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
 
         // notificationId is a unique int for each notification that you must define
-        //TODO - change id to UNIQUE ID
-        notificationManager.notify(1234, mBuilder.build());
+        //DONE - change id to UNIQUE ID
+        notificationManager.notify(id, mBuilder.build());
     }
 }

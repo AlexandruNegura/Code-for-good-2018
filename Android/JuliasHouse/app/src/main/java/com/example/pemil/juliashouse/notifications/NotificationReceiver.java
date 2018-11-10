@@ -10,7 +10,9 @@ public class NotificationReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        int id = intent.getIntExtra(NotificationUtils.ID, -1);
         Intent intent1 = new Intent(context, NotificationIntentService.class);
+        intent1.putExtra(NotificationUtils.ID, id);
         context.startService(intent1);
     }
 }
