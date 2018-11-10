@@ -46,4 +46,9 @@ public class CarrerServiceImpl implements CarrerService {
     public List<Carrer> getAll() {
         return carrerRepo.findAll();
     }
+
+    @Override
+    public Carrer findById(Long id) {
+        return carrerRepo.getOne(id);
+    }
 }

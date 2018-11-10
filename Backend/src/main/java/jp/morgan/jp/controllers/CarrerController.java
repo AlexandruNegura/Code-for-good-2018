@@ -54,18 +54,28 @@ public class CarrerController {
     ResponseEntity<List<CarrerOutDTO>> getAllCarers() {
         List<Carrer> carrers = carrerService.getAll();
 
-        List<CarrerOutDTO> carrerOutDTOS = carrers.stream().map(carrer -> modelMapper.map(carrer, CarrerOutDTO.class)).collect(
-                Collectors.toList());
+        List<CarrerOutDTO> carrerOutDTOS = carrers.stream()
+                                                  .map(carrer -> modelMapper.map(carrer, CarrerOutDTO.class))
+                                                  .collect(
+                                                          Collectors.toList());
 
-        for(Carrer carrer : carrers) {
-            CarrerOutDTO carrerOutDTO = carrerOutDTOS.stream().filter(carrerOutDTO1 -> carrerOutDTO1.id.equals(carrer.getId())).findFirst().get();
-            for(Sit sit : carrer.getSits()) {
+        for (Carrer carrer : carrers) {
+            CarrerOutDTO carrerOutDTO = carrerOutDTOS.stream()
+                                                     .filter(carrerOutDTO1 -> carrerOutDTO1.id.equals(carrer.getId()))
+                                                     .findFirst()
+                                                     .get();
+            for (Sit sit : carrer.getSits()) {
                 carrerOutDTO.sitsId.add(sit.getId());
             }
         }
 
-
         return new ResponseEntity<>(carrerOutDTOS, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}/getAll")
+    ResponseEntity<List<Sit>> getAllSitsforCarer(@PathVariable("id") Long id) {
+        Carrer carrer = carrerService.findById(id);
+
+        return new ResponseEntity<>(carrer.getSits(), HttpStatus.OK);
+    }
 }
