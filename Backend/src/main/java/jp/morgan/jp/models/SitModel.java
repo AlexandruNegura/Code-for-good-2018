@@ -1,18 +1,13 @@
 package jp.morgan.jp.models;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import jp.morgan.jp.Utils.MyDateTimeDeserializer;
-import org.joda.time.DateTime;
-
+import java.util.Date;
 import java.util.List;
 
 public class SitModel {
 
-    @JsonDeserialize(using= MyDateTimeDeserializer.class)
-    public DateTime startDate;
+    public Date startDate;
 
-    @JsonDeserialize(using=MyDateTimeDeserializer.class)
-    public DateTime endDate;
+    public Date endDate;
 
     public Long patientId;
 
