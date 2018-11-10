@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
     android:background="#ccc"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:onClick="openSit">
 
     <LinearLayout
         android:layout_width="match_parent"
