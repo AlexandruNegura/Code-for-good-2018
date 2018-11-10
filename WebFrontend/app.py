@@ -11,6 +11,10 @@ def hello_world():
 def sit_add():
     return render_template('sit-form.html')
 
+@app.route('/carer/add')
+def carer_add():
+    return render_template('carer-form.html')
+
 
 if __name__ == '__main__':
     app.run()
