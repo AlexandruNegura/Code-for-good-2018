@@ -5,8 +5,6 @@ import org.joda.time.DateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import java.util.List;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE,
                 setterVisibility = JsonAutoDetect.Visibility.ANY,
@@ -19,10 +17,10 @@ public class Sit extends IdEntity {
     private DateTime startDate;
 
     @Column
-    private DateTime endTime;
+    private DateTime endDate;
 
     @Column
-    private Long patient_id;
+    private Long patientId;
 
     @Column
     private Boolean canceled;
@@ -38,20 +36,20 @@ public class Sit extends IdEntity {
         this.startDate = startDate;
     }
 
-    public DateTime getEndTime() {
-        return endTime;
+    public DateTime getEndDate() {
+        return endDate;
     }
 
-    public void setEndTime(DateTime endTime) {
-        this.endTime = endTime;
+    public void setEndDate(DateTime endDate) {
+        this.endDate = endDate;
     }
 
-    public Long getPatient_id() {
-        return patient_id;
+    public Long getPatientId() {
+        return patientId;
     }
 
-    public void setPatient_id(Long patient_id) {
-        this.patient_id = patient_id;
+    public void setPatientId(Long patientId) {
+        this.patientId = patientId;
     }
 
     public Boolean getCanceled() {
