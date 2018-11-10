@@ -26,7 +26,8 @@ public class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyView
     public void onBindViewHolder(VerticalAdapter.MyViewHolder holder, int position) {
         holder.image.setImageResource(data.get(position).getImage());
         holder.title.setText(data.get(position).getHeader());
-        holder.description.setText(data.get(position).getSubHeader());
+        holder.startDate.setText(data.get(position).getStartDate());
+        holder.endDate.setText(data.get(position).getEndDate());
     }
 
     @Override
@@ -36,13 +37,14 @@ public class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyView
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
-        TextView title, description;
+        TextView title, startDate, endDate;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            image = (ImageView) itemView.findViewById(R.id.image);
-            title = (TextView) itemView.findViewById(R.id.title);
-            description = (TextView) itemView.findViewById(R.id.description);
+            image = itemView.findViewById(R.id.image);
+            title = itemView.findViewById(R.id.title);
+            startDate  = itemView.findViewById(R.id.start_date);
+            endDate  = itemView.findViewById(R.id.end_date);
         }
     }
 }

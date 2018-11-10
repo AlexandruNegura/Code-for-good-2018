@@ -2,16 +2,17 @@ package com.example.pemil.juliashouse;
 
 public class SingleVertical {
 
-    private String header, subHeader;
+    private String header;
     private int image;
-
+    private String startDate, endDate;
     public SingleVertical( ) {
 
     }
 
-    public SingleVertical(String header, String subHeader, int image) {
+    public SingleVertical(String header, String startDate, String endDate, int image) {
         this.header = header;
-        this.subHeader = subHeader;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.image = image;
     }
 
@@ -23,16 +24,24 @@ public class SingleVertical {
         this.header = header;
     }
 
-    public String getSubHeader() {
-        return subHeader;
-    }
-
-    public void setSubHeader(String subHeader) {
-        this.subHeader = subHeader;
-    }
-
     public int getImage() {
         return image;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 
     public void setImage(int image) {
