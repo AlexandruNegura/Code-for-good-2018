@@ -1,10 +1,12 @@
 package jp.morgan.jp.entities;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import org.joda.time.DateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import java.util.Date;
+import java.util.List;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE,
                 setterVisibility = JsonAutoDetect.Visibility.ANY,
@@ -14,10 +16,10 @@ import javax.persistence.Entity;
 public class Sit extends IdEntity {
 
     @Column
-    private DateTime startDate;
+    private Date startDate;
 
     @Column
-    private DateTime endDate;
+    private Date endDate;
 
     @Column
     private Long patientId;
@@ -25,22 +27,25 @@ public class Sit extends IdEntity {
     @Column
     private Boolean canceled;
 
+    @ManyToMany(mappedBy = "sits")
+    private List<Carrer> carrerList;
+
     public Sit() {
     }
 
-    public DateTime getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(DateTime startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public DateTime getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(DateTime endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
@@ -60,4 +65,11 @@ public class Sit extends IdEntity {
         this.canceled = canceled;
     }
 
+    public List<Carrer> getCarrerList() {
+        return carrerList;
+    }
+
+    public void setCarrerList(List<Carrer> carrerList) {
+        this.carrerList = carrerList;
+    }
 }

@@ -1,6 +1,8 @@
 package jp.morgan.jp.controllers;
 
 import jp.morgan.jp.entities.Carrer;
+import jp.morgan.jp.entities.Sit;
+import jp.morgan.jp.models.CarrerOutDTO;
 import jp.morgan.jp.models.UserLoginModel;
 import jp.morgan.jp.models.UserSignUpModel;
 import jp.morgan.jp.services.CarrerService;
@@ -10,6 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = CarrerController.USER_CONTROLLER_PATH, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -43,6 +48,24 @@ public class CarrerController {
         Carrer carrer = carrerService.addUser(modelMapper.map(user, Carrer.class));
 
         return new ResponseEntity<>(carrer, HttpStatus.OK);
+    }
+
+    @GetMapping("/getAll")
+    ResponseEntity<List<CarrerOutDTO>> getAllCarers() {
+        List<Carrer> carrers = carrerService.getAll();
+
+        List<CarrerOutDTO> carrerOutDTOS = carrers.stream().map(carrer -> modelMapper.map(carrer, CarrerOutDTO.class)).collect(
+                Collectors.toList());
+
+        for(Carrer carrer : carrers) {
+            CarrerOutDTO carrerOutDTO = carrerOutDTOS.stream().filter(carrerOutDTO1 -> carrerOutDTO1.id.equals(carrer.getId())).findFirst().get();
+            for(Sit sit : carrer.getSits()) {
+                carrerOutDTO.sitsId.add(sit.getId());
+            }
+        }
+
+
+        return new ResponseEntity<>(carrerOutDTOS, HttpStatus.OK);
     }
 
 }
