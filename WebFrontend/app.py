@@ -1,5 +1,7 @@
 from flask import Flask, render_template, redirect
 import requests
+from datetime import datetime
+import dateparser
 
 app = Flask(__name__)
 
@@ -11,8 +13,7 @@ def hello_world():
 @app.route('/sit')
 def sits():
     data = requests.get('https://code-for-good.herokuapp.com/api/sit/getAll', json={}).json()
-    print(data)
-    return render_template('index.html', data=data)
+    return render_template('index.html', data=data, parse=dateparser.parse)
 
 @app.route('/sit/add')
 def sit_add():
@@ -24,7 +25,8 @@ def sit_modify():
 
 @app.route('/carer')
 def carers():
-    return render_template('index.html')
+    data = requests.get('https://code-for-good.herokuapp.com/api/sit/getAll', json={}).json()
+    return render_template('carers-list', data=data, parse=dateparser.parse)
 
 @app.route('/carer/add')
 def carer_add():

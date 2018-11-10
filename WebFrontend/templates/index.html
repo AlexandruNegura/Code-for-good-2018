@@ -58,7 +58,7 @@
     <div class="col-xl-12 col-lg-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Recent Invoices</h4>
+                <h4 class="card-title">Sits list</h4>
                 <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
                 <div class="heading-elements">
                     <ul class="list-inline mb-0">
@@ -72,21 +72,27 @@
                     <table class="table table-hover mb-0">
                         <thead>
                             <tr>
-                                <th>Invoice#</th>
-                                <th>Customer Name</th>
-                                <th>Status</th>
-                                <th>Due</th>
-                                <th>Amount</th>
+                                <th> </th>
+                                <th>Sit ID #</th>
+                                <th>Date</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                                <th>Patient ID</th>
+                                <th>Canceled</th>
+                                <th>Carers</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for item in data %}
                             <tr>
-                                <td class="text-truncate"><a href="#"> {{ item.id }} </a></td>
-                                <td class="text-truncate">{{ item.startDate }}</td>
-                                <td class="text-truncate"><span class="tag tag-default tag-success">{{ item.endDate}}</span></td>
+                                <td class="text-truncate"><a href="/sit/{{ item.id }}/modify"> <i class="icon-document-text"></i> </a></td>
+                                <td class="text-truncate">{{ item.id }} </td>
+                                <td class="text-truncate">{{ parse(item.startDate).strftime('%m-%d-%Y') }}</td>
+                                <td class="text-truncate"><span class="tag tag-default tag-success">{{ parse(item.startDate).strftime('%H:%M %p') }}</span></td>
+                                <td class="text-truncate"><span class="tag tag-default tag-success">{{ parse(item.endDate).strftime('%H:%M %p') }}</span></td>
                                 <td class="text-truncate">{{ item.patientId }}</td>
                                 <td class="text-truncate">{{ item.canceled }}</td>
+                                <td class="text-truncate">{% for carrer in item.carrerList %} {{ carrer.name }} {% endfor %}</td>
                             </tr>
                             {%  endfor %}
                         </tbody>
