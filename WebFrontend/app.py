@@ -1,5 +1,6 @@
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, url_for, request
 import requests
+import json
 from datetime import datetime
 import dateparser
 
@@ -29,9 +30,26 @@ def carers():
     print(data)
     return render_template('carers-list.html', data=data)
 
-@app.route('/carer/add')
+@app.route('/carer/add', methods=['GET', 'POST'])
 def carer_add():
-    return render_template('carer-form.html')
+    if request.method == 'POST':
+        username = request.form['usernameinput']
+        name = request.form['nameinput']
+        defpassword = request.form['defaultpasswordinput']
+        data = {}
+        data['name'] = name
+        data['username'] = username
+        data['password'] = defpassword
+        json_data = json.dumps(data)
+        print(json_data)
+        headers = {
+            'Content-Type': "application/json",
+        }
+        response = requests.request("POST", "https://code-for-good.herokuapp.com/api/user/add-user",
+                                                            data=json_data, headers=headers)
+        return redirect('/carer')
+    else:
+        return render_template('carer-form.html')
 
 @app.route('/carer/modify')
 def carer_modify():

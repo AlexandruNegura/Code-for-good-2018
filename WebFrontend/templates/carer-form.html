@@ -56,49 +56,46 @@
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header">
-                  <h4 class="card-title" id="basic-layout-icons">Timesheet</h4>
+                  <h4 class="card-title" id="basic-layout-icons">Add new carer</h4>
                   <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
                   <div class="heading-elements">
                     <ul class="list-inline mb-0">
-                      <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
-                      <li><a data-action="reload"><i class="icon-reload"></i></a></li>
                       <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
-                      <li><a data-action="close"><i class="icon-cross2"></i></a></li>
                     </ul>
                   </div>
                 </div>
                 <div class="card-body collapse in">
                   <div class="card-block">
-                    <form class="form">
+                    <form class="form" action="/carer/add" method="post">
                       <div class="form-body">
 
                         <div class="form-group">
-                          <label for="timesheetinput1">Employee Name</label>
+                          <label for="usernameinput">Payroll number</label>
                           <div class="position-relative has-icon-left">
-                            <input type="text" id="timesheetinput1" class="form-control" placeholder="employee name"
-                              name="employeename">
+                            <input type="text" id="usernameinput" class="form-control" placeholder="Payroll number"
+                              name="usernameinput">
+                            <div class="form-control-position">
+                              <i class="icon-list-numbered"></i>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="nameinput">Carer name</label>
+                          <div class="position-relative has-icon-left">
+                            <input type="text" id="nameinput" class="form-control" placeholder="Carer name"
+                              name="nameinput">
                             <div class="form-control-position">
                               <i class="icon-head"></i>
                             </div>
                           </div>
                         </div>
                         <div class="form-group">
-                          <label for="timesheetinput1">Employee Name</label>
+                          <label for="defaultpasswordinput">Default password</label>
                           <div class="position-relative has-icon-left">
-                            <input type="text" id="timesheetinput1" class="form-control" placeholder="employee name"
-                              name="employeename">
+                            <input type="text" id="defaultpasswordinput" class="form-control" placeholder="Default password"
+                              name="defaultpasswordinput">
                             <div class="form-control-position">
-                              <i class="icon-head"></i>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label for="timesheetinput1">Employee Name</label>
-                          <div class="position-relative has-icon-left">
-                            <input type="text" id="timesheetinput1" class="form-control" placeholder="employee name"
-                              name="employeename">
-                            <div class="form-control-position">
-                              <i class="icon-head"></i>
+                              <i class="icon-lock"></i>
                             </div>
                           </div>
                         </div>
