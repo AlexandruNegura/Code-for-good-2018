@@ -1,8 +1,14 @@
 package com.example.pemil.juliashouse;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.content.SharedPreferences;
+import android.view.View;
+import android.widget.EditText;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -10,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,6 +26,13 @@ public class LoginActivity extends AppCompatActivity {
     //Declare a private RequestQueue variable
     private RequestQueue requestQueue;
     private static LoginActivity mInstance;
+
+    private Context context;
+    private SharedPreferences sharedPref;
+    private SharedPreferences.Editor editor;
+    private EditText usernameEditText;
+    private EditText passwordEditText;
+
 
     public static synchronized LoginActivity getInstance() {
         return mInstance;
@@ -53,31 +67,89 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        context = this;
+        Boolean logged = false;
+        String savedUser;
+        String davedPassword;
+        int id;
+
+        sharedPref = context.getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        editor = sharedPref.edit();
+
+
+
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.login);
         mInstance = this;
 
-        POST("alex", "alex");
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
+
+        // Check if UserResponse is Already Logged In
+        savedUser = sharedPref.getString("username", "");
+        davedPassword = sharedPref.getString("password", "");
+        id = sharedPref.getInt("id", -1);
+
+        logged = (savedUser != "") && (davedPassword != "");
+
+        if (logged) {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.putExtra("id", id);
+            startActivity(intent);
+        }
 
 
     }
 
-    public void POST(final String user, final String passwd) {
+
+    public void login(View viewd) {
 
         RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
         String requestUrl = "https://code-for-good.herokuapp.com/api/user/login";
         JSONObject postparams = new JSONObject();
+
+        usernameEditText = findViewById(R.id.username);
+        passwordEditText = findViewById(R.id.input_user_password);
+
+
+        final String user = usernameEditText.getText().toString();
+        final String passwd = passwordEditText.getText().toString();
+        Log.i("DANA", user + " " + passwd);
         try {
             postparams.put("username", user);
             postparams.put("password", passwd);
 
             JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                     requestUrl, postparams,
-                    new Response.Listener() {
+                    new Response.Listener<JSONObject>() {
                         @Override
-                        public void onResponse(Object response) {
+                        public void onResponse(JSONObject response) {
 
-                            Log.i("DANA",response.toString());
+                            // caching the authentification details
+                            Log.i("Auth successful",response.toString());
+                            editor.putString("username", user);
+                            editor.putString("password", passwd);
+
+                            try {
+
+                                editor.putInt("id", response.getInt("id"));
+                                editor.commit();
+
+                                // change intent
+
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                intent.putExtra("id", response.getInt("id"));
+                                startActivity(intent);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
 
                         }
 
